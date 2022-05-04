@@ -21,13 +21,14 @@ export interface Config {
     appDebug: boolean,
     appPort: number,
     redisPort: number,
+    redisHost: string,
     redisUsername: string,
     redisPassword: string,
     redisDB: number,
 }
 
 /**
- * Validates the .env file
+ * Validates the .env file.
  * @type {joi.ObjectSchema<any>}
  */
 const envVarsSchema = joi
@@ -37,7 +38,7 @@ const envVarsSchema = joi
         APP_DEBUG: joi.bool().default(true),
         APP_PORT: joi.number().default(3000),
         REDIS_PORT: joi.number().positive().required(),
-        REDIS_ADDRESS: joi.string().ip().required(),
+        REDIS_HOST: joi.string().ip().required(),
         REDIS_DB: joi.number().optional().allow('')
     })
     .unknown();
@@ -55,6 +56,7 @@ module.exports = <Config>{
     appDebug: envVars.APP_DEBUG,
     appPort: envVars.APP_PORT,
     redisPort: envVars.REDIS_PORT,
+    redisHost: envVars.REDIS_ADDRESS,
     redisUsername: envVars.REDIS_USERNAME,
     redisPassword: envVars.REDIS_PASSWORD,
     redisDB: envVars.REDIS_DB !== '' ? envVars.REDIS_DB : 0,
