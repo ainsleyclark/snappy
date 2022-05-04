@@ -4,6 +4,7 @@ module.exports = {
     testEnvironment: 'node',
     verbose: true,
     silent: false,
+    setupFiles: ["dotenv/config"],
     "collectCoverage": true,
     "coverageReporters": ["json", "html"],
 };

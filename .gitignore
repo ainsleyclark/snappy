@@ -112,3 +112,6 @@ credentials.md
 
 # System Files
 .DS_Store
+
+# Coverage Files
+coverage
