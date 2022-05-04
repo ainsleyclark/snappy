@@ -9,7 +9,7 @@ describe('Environment', () => {
         try {
             const env = require("./../../src/util/env");
 
-            console.log(env)
+            console.log(env);
         } catch (e) {
             console.log(e);
         }

@@ -35,7 +35,7 @@ snappy.snap({
     url: "https://reddico.co.uk",
     sizes: ['1920x1080'],
     crop: true,
-})
+});
 
 
 /**

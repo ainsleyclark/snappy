@@ -29,7 +29,7 @@ export class Snappy {
      *
      * @type {RedisClientType}
      */
-    client: RedisClientType
+    client: RedisClientType;
 
     /**
      *
@@ -52,7 +52,7 @@ export class Snappy {
             cookies: opts.cookies,
             filename: Buffer.from(Math.random().toString()).toString("base64").substr(10, 24),
             select: opts.selector,
-        }
+        };
 
         const dir = os.tmpdir(),
             test = new pageres({delay: 1})
@@ -69,7 +69,7 @@ export class Snappy {
         })
         .catch((err: any) => {
             // TODO Log
-            console.log(err)
+            console.log(err);
         });
     }
 
@@ -117,7 +117,7 @@ export class Snappy {
         });
 
         client.on('error', (err) =>{
-            throw new Error('Redis Client Error', err)
+            throw new Error('Redis Client Error', err);
         });
 
         await client.connect();

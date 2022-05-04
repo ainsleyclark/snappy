@@ -3,7 +3,7 @@ import * as path from 'path';
 const env = require('dotenv'),
     joi = require('joi');
 
-let envPath = path.resolve(process.cwd(), '.env')
+const envPath = path.resolve(process.cwd(), '.env');
 
 /**
  * Load the environment file inside the root directory.
