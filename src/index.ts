@@ -1,8 +1,12 @@
 import * as express from 'express';
 import { createClient } from 'redis';
 
+
 const app = express(),
-    logger = require("./log/logger");
+    logger = require('./util/logger'),
+    env = require('./util/env');
+
+console.log(env);
 
 app.get('/', async (req: express.Request, res: express.Response) => {
 
@@ -14,7 +18,7 @@ app.get('/', async (req: express.Request, res: express.Response) => {
         crop: req.query.crop,
         hide: req.query.hide,
         // TODO - More?
-    }
+    };
 
     // const client = createClient({
     //     username: process.env.username,
@@ -33,7 +37,7 @@ app.get('/', async (req: express.Request, res: express.Response) => {
 
    //console.log(value);
 
-    res.json(opts)
+    res.json(opts);
 
     // Get the query parameters into options
     // Check if the URL exists, if it doesn't return error
@@ -44,7 +48,7 @@ app.get('/', async (req: express.Request, res: express.Response) => {
     //      -> Read file
     // Cache new file
     // Return image
-})
+});
 
 // Capture 404 errors
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {

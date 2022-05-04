@@ -21,4 +21,4 @@ if (process.env.NODE_ENV !== 'production') {
     }));
 }
 
-module.exports = <Logger>logger
+module.exports = <Logger>logger;
