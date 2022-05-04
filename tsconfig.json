@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "CommonJS",
+    "strict": true,
+    "jsx": "preserve",
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["src/*.d.ts"]
+    },
+    "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": false
+  }
+}
