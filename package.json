@@ -2,9 +2,9 @@
   "name": "snappy",
   "version": "1.0.0",
   "description": "A website screenshot capture tool.",
-  "main": "src/index.ts",
+  "main": "index.ts",
   "scripts": {
-    "start": "npx ts-node src/index.ts",
+    "start": "npx ts-node index.ts",
     "test": "jest",
     "test:watch": "jest --watch --onlyChanged",
     "coverage": "jest --coverageReporters=text-summary",

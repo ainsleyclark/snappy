@@ -3,8 +3,7 @@ import {Options} from "./service/options";
 import {Snappy} from "./service/snappy";
 
 const app = express(),
-    logger = require('./util/logger'),
-    env = require('./util/env');
+    logger = require('./util/logger');
 
 /**
  *
@@ -36,7 +35,6 @@ snappy.snap({
     sizes: ['1920x1080'],
     crop: true,
 });
-
 
 /**
  *

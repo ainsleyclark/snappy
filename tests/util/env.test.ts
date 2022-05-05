@@ -7,7 +7,7 @@ describe('Environment', () => {
 
     it("Should throw an error when validation is bad", () => {
         try {
-            const env = require("./../../src/util/env");
+            const env = require("../../util/env");
 
             console.log(env);
         } catch (e) {

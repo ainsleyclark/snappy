@@ -10,6 +10,14 @@ export interface Options {
      * TODO
      */
     sizes: string[];
+	/**
+	 * TODO
+	 */
+	ignoreCache?: boolean;
+	/**
+	 * TODO
+	 */
+	rebuildCache?: boolean;
     /**
      * Delay capturing the screenshot.
      * Useful when the site does things after load that you want to capture.
