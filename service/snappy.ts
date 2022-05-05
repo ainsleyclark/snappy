@@ -57,10 +57,12 @@ export class Snappy {
 			select: opts.selector,
 		};
 
-		// If the options allow TODO
+		// If the options have 'ignore cache' set to false,
+		// try and retrieve the image from the cache instance.
 		if (!opts.ignoreCache) {
-			this.getImage("TODO: CHANGE");
+			this.getImage(this.cacheKey(opts));
 		}
+
 
         const response = new pageres({delay: 1})
             .src(opts.url, opts.sizes, pOptions)
@@ -133,6 +135,30 @@ export class Snappy {
 				return "fuck";
 			});
     }
+
+	/**
+	 * Returns a unique key for the cache driver by serialising
+	 * the options
+	 * @param {Options} opts
+	 * @return {string}
+	 * @private
+	 */
+	private cacheKey(opts: Options): string {
+		const exclude = [
+				"ignoreCache",
+				"rebuildCache",
+			],
+			serialised: {
+				[key: string]: any
+			} = {};
+		for (const [key, value] of Object.entries(opts)) {
+			if (exclude.includes(key)) {
+				continue;
+			}
+			serialised[key] = value;
+		}
+		return JSON.stringify(serialised);
+	}
 
     /**
      * Loads the redis cache driver for storing images within
