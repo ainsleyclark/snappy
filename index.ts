@@ -1,14 +1,20 @@
+/**
+ *
+ */
 import * as express from 'express';
 import {Options} from "./service/options";
 import {Snappy} from "./service/snappy";
 
 const app = express(),
-    logger = require('./util/logger');
+    logger = require('./util/logger'),
+	env = require('./util/env');
 
 /**
  *
  */
 app.get('/', async (req: express.Request, res: express.Response) => {
+	logger.http("Hello");
+
     const opts = <Options>{
         url: req.query.url,
         delay: req.query.delay,
@@ -17,6 +23,14 @@ app.get('/', async (req: express.Request, res: express.Response) => {
         hide: req.query.hide,
         // TODO - More?
     };
+
+	const img = "";
+	res.writeHead(200, {
+		'Content-Type': 'image/png',
+		'Content-Length': img.length
+	});
+	res.end(img);
+
     res.json(opts);
 });
 
@@ -38,7 +52,7 @@ snappy.snap({
 
 /**
  *
-//  */
-// app.listen(env.appPort, () => {
-//     console.log('The application is listening on port 3000!');
-// });
+ */
+app.listen(env.appPort || 3000, () => {
+    logger.info("Snappy is listening on port 3000");
+});

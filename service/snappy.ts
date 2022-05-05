@@ -1,3 +1,6 @@
+/**
+ *
+ */
 import * as path from 'path';
 import {createClient} from "redis";
 import {Options} from "./options";
@@ -44,7 +47,9 @@ export class Snappy {
      *
      * @param {Options} opts
      */
-    public snap(opts: Options) {
+    public snap(opts: Options): string {
+		logger.info(`Processing image for URL: ${opts.url}`);
+
         const dir = os.tmpdir(),
 			pOptions = {
 			delay: opts.delay,
@@ -60,10 +65,11 @@ export class Snappy {
 		// If the options have 'ignore cache' set to false,
 		// try and retrieve the image from the cache instance.
 		if (!opts.ignoreCache) {
+			logger.error
 			this.getImage(this.cacheKey(opts));
 		}
 
-
+		// Process the image screenshot download.
         const response = new pageres({delay: 1})
             .src(opts.url, opts.sizes, pOptions)
             .dest(dir)
@@ -78,6 +84,8 @@ export class Snappy {
 			.catch((err: any) => {
 				console.log(err);
 			});
+
+		return "";
     }
 
 	/**
