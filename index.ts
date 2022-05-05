@@ -26,7 +26,7 @@ app.get('/', async (req: express.Request, res: express.Response) => {
     };
 
     const data = await snappy.snap({
-        url: "https://reddico.co.uk",
+        url: "https://google.com",
         sizes: ['1920x1080'],
         crop: true,
     });

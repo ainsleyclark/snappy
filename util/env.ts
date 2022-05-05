@@ -1,8 +1,6 @@
 /**
- *
+ * TODO
  */
-import * as path from 'path';
-
 const env = require('dotenv'),
     joi = require('joi');
 
