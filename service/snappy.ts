@@ -84,15 +84,15 @@ export class Snappy {
             try {
                 const b64 = await this.getImage(cacheKey);
                 if (b64 == null) {
-                    throw new Error(`It's null`);
+                    // TODO I think this should be an exception.
+                    throw new Error(`Image is null`);
                 }
+				logger.debug(`Serving image from cache: ${cacheKey}`);
                 return b64;
             } catch (err) {
                 logger.debug(err);
             }
         }
-
-        throw new Error("fuckedd");
 
         // Process the image screenshot download.
         try {
@@ -100,7 +100,9 @@ export class Snappy {
                 .src(opts.url, opts.sizes, pOptions)
                 .dest(dir)
                 .run();
-            return this.processScreenshot(screenshots, dir, cacheKey);
+            const data = this.processScreenshot(screenshots, dir, cacheKey);
+			logger.debug(`Serving image from fs: ${cacheKey}`);
+			return data;
         } catch (err) {
 			// TODO, can we return from promise?
         }
@@ -164,7 +166,7 @@ export class Snappy {
         try {
             return await this.cache.get(key);
         } catch (err) {
-            throw err;
+            throw new Error(`Item could not be retrieved from cache ${err}: err`);
         }
     }
 

@@ -26,7 +26,7 @@ app.get('/', async (req: express.Request, res: express.Response) => {
     };
 
     const data = await snappy.snap({
-        url: "https://google.com",
+        url: opts.url,
         sizes: ['1920x1080'],
         crop: true,
     });
@@ -50,6 +50,7 @@ app.get('/favicon.ico', (req: express.Request, res: express.Response) => res.sta
 
 /**
  * 404 Handler.
+ * TODO: Log handler
  */
 app.use((req: express.Request, res: express.Response, next: express.NextFunction) => {
     res.status(404).send("Page not found");
