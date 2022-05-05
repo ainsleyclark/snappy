@@ -94,8 +94,7 @@ export class Snappy {
 		// Retrieve the filepath, read the file from the system and
 		// encode into a base 64 buffer.
 		const filePath = path.join(dir, screenshots[0].filename),
-			buf = fs.readFileSync(filePath),
-			b64 = buf.toString('base64');
+			b64 = fs.readFileSync(filePath).toString('base64');
 
 		// Cache in b64 data in Redis.
 		this.storeImage(b64);
