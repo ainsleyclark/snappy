@@ -13,6 +13,9 @@ const fs = require("fs"),
     pageres = require('pageres'),
     mime = require('mime');
 
+/**
+ * Alias of a Redis Client.
+ */
 type RedisClientType = ReturnType<typeof createClient>;
 
 /**
