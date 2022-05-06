@@ -1,5 +1,5 @@
 /**
- *
+ * Returns a formatted error message.
  * @param error
  * @returns {string}
  */

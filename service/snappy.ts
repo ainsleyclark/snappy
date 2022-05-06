@@ -111,20 +111,18 @@ class Snapper {
         }
 
         // Process the image screenshot download.
-        try {
-            const screenshots = await new pageres({delay: 1})
-                .src(opts.url, [opts.size], pageresOptions)
-                .dest(dir)
-                .run();
-            const data = this.processScreenshot(screenshots, dir, cacheKey);
-            if (!data) {
-                throw new NullImageError('Base64 is null');
-            }
-            Log.debug(`Serving image from fs: ${cacheKey}`);
-            return data;
-        } catch (err) {
-            throw err;
-        }
+		const screenshots = await new pageres({delay: 1})
+			.src(opts.url, [opts.size], pageresOptions)
+			.dest(dir)
+			.run();
+
+		const data = this.processScreenshot(screenshots, dir, cacheKey);
+		if (!data) {
+			throw new NullImageError('Base64 is null');
+		}
+
+		Log.debug(`Serving image from fs: ${cacheKey}`);
+		return data;
     }
 
     /**
@@ -208,7 +206,7 @@ class Snapper {
         });
 
         client.on('error', (err) => {
-            throw new Error('Redis Client Error', err);
+            throw new Error(`Redis connect error: ${err}`);
         });
 
         client.on('connect', () => {
@@ -257,4 +255,4 @@ class Snapper {
 const Snappy = new Snapper();
 export {
     Snappy
-}
+};

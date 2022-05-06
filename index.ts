@@ -8,18 +8,19 @@ import {Environment} from "./util/env";
 import {Snappy} from "./service/snappy";
 import {ping} from "./handler/ping";
 import {snap} from "./handler/snap";
+import {getErrorMessage} from "./util/error";
 
 const app = express(),
     emoji = require('node-emoji'),
     welcome = require('cli-welcome');
 
 /**
- *
+ * VERSION is the current version number of Snappy.
  * @type {string}
  */
-const VERSION = '1.0'
+const VERSION = '1.0';
 
-app.use(HTTPLog);
+//app.use(HTTPLog);
 
 /**
  *
@@ -57,5 +58,5 @@ Snappy.ready
         });
     })
     .catch(err => {
-        Log.crit(err);
+		Log.error(getErrorMessage(err));
     });
