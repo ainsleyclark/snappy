@@ -10,7 +10,6 @@ import {Environment} from "../util/env";
 import {NullImageError} from "./errors";
 import {getErrorMessage} from "../util/error";
 
-
 const fs = require("fs"),
     os = require('os'),
     pageres = require('pageres'),
@@ -43,9 +42,9 @@ const CACHE_KEY_PREFIX = `snappy`;
 const TIMEOUT = 20;
 
 /**
- * Snappy is responsible for TODO.
+ * Snapper is responsible for TODO.
  */
-export class Snappy {
+class Snapper {
     /**
      * Ready is resolved when the Redis instance
      * is loaded.
@@ -63,6 +62,7 @@ export class Snappy {
      * Creates a new Snappy instance.
      */
     constructor() {
+        Log.debug('Starting snappy...')
         this.ready = new Promise((resolve, reject) => {
             this.loadRedis()
                 .then(() => resolve(undefined))
@@ -85,13 +85,13 @@ export class Snappy {
             css: opts.css,
             script: opts.script,
             cookies: opts.cookies,
-            filename: this.fileName(),
+            filename: Snapper.fileName(),
             select: opts.selector,
         };
 
         // TODO
         const dir = os.tmpdir(),
-            cacheKey = Snappy.cacheKey(opts);
+            cacheKey = Snapper.cacheKey(opts);
 
         // If the options have 'ignore cache' set to false,
         // try and retrieve the image from the cache instance.
@@ -101,7 +101,7 @@ export class Snappy {
                 if (b64 == null) {
                     throw new NullImageError(`Base64 is null`);
                 }
-				Log.debug(`Serving image from cache: ${cacheKey}`);
+                Log.debug(`Serving image from cache: ${cacheKey}`);
                 return b64;
             } catch (err: unknown) {
                 if (!(err instanceof NullImageError)) {
@@ -121,19 +121,10 @@ export class Snappy {
                 throw new NullImageError('Base64 is null');
             }
             Log.debug(`Serving image from fs: ${cacheKey}`);
-			return data;
+            return data;
         } catch (err) {
-			throw err;
+            throw err;
         }
-    }
-
-    /**
-     *
-     * @returns {string}
-     * @private
-     */
-    private fileName(): string {
-        return Buffer.from(Math.random().toString()).toString("base64").substr(10, 24);
     }
 
     /**
@@ -199,6 +190,37 @@ export class Snappy {
     }
 
     /**
+     * Loads the redis cache driver for storing images within
+     * the Redis datalayer.
+     * Throws an error if the connection could not be established.
+     * @returns {Promise<void>}
+     * @throws
+     * @private
+     */
+    private async loadRedis() {
+        const client = createClient({
+            username: Environment.redisUsername,
+            database: Environment.redisDB,
+            socket: {
+                port: Environment.redisPort,
+                host: Environment.redisHost,
+            },
+        });
+
+        client.on('error', (err) => {
+            throw new Error('Redis Client Error', err);
+        });
+
+        client.on('connect', () => {
+            Log.debug('Successfully connected to Redis client');
+        });
+
+        await client.connect().then(() => {
+            this.cache = client;
+        });
+    }
+
+    /**
      * Returns a unique key for the cache driver by serialising
      * the options.
      * @param {Options} opts
@@ -223,33 +245,16 @@ export class Snappy {
     }
 
     /**
-     * Loads the redis cache driver for storing images within
-     * the Redis datalayer.
-     * Throws an error if the connection could not be established.
-     * @returns {Promise<void>}
-     * @throws
+     *
+     * @returns {string}
      * @private
      */
-    private async loadRedis() {
-        const client = createClient({
-            username: Environment.redisUsername,
-            database: Environment.redisDB,
-            socket: {
-                port: Environment.redisPort,
-                host: Environment.redisHost,
-            },
-        });
-
-        client.on('error', (err) => {
-            throw new Error('Redis Client Error', err);
-        });
-
-        client.on('connect', () => {
-            Log.info('Successfully connected to Redis client');
-        });
-
-        await client.connect().then(() => {
-            this.cache = client;
-        });
+    private static fileName(): string {
+        return Buffer.from(Math.random().toString()).toString("base64").substr(10, 24);
     }
+}
+
+const Snappy = new Snapper();
+export {
+    Snappy
 }

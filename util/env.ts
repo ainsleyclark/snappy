@@ -63,8 +63,8 @@ const Environment = <Config>{
     redisUsername: envVars.REDIS_USERNAME,
     redisPassword: envVars.REDIS_PASSWORD,
     redisDB: envVars.REDIS_DB !== '' ? envVars.REDIS_DB : 0,
-}
+};
 
 export {
     Environment
-}
+};
