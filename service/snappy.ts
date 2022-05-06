@@ -113,7 +113,7 @@ class Snapper {
         // Process the image screenshot download.
         try {
             const screenshots = await new pageres({delay: 1})
-                .src(opts.url, opts.sizes, pageresOptions)
+                .src(opts.url, [opts.size], pageresOptions)
                 .dest(dir)
                 .run();
             const data = this.processScreenshot(screenshots, dir, cacheKey);

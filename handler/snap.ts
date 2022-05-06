@@ -2,10 +2,10 @@
  * snap.ts
  */
 import * as express from "express";
-import {Options} from "../service/options";
 import {Log} from "../util/logger";
+import {Snappy} from "../service/snappy"
+import {Options} from "../service/options";
 import {getErrorMessage} from "../util/error";
-import {Snappy} from "../service/snappy";
 
 /**
  * TODO
@@ -14,22 +14,29 @@ import {Snappy} from "../service/snappy";
  * @returns {Promise<void>}
  */
 export const snap = async (req: express.Request, res: express.Response) => {
-    // This is an object, we can loop.
     const opts = <Options>{
         url: req.query.url,
+        size: req.query.size,
+        ignoreCache: req.query.ignoreCache,
         delay: req.query.delay,
         crop: req.query.crop,
-        hide: req.query.hide,
         script: req.query.script,
-        // TODO - More?
+        cookies: req.query.cookies,
+        selector: req.query.selector,
+        hide: req.query.hide,
+        scale: req.query.scale,
+        userAgent: req.query.userAgent,
+        headers: req.query.headers,
+        transparent: req.query.transparent,
+        darkMode: req.query.darkMode,
     };
 
-    // TODO
-    Snappy.snap({
-        url: opts.url,
-        sizes: ['1920x1080'],
-        crop: true,
-    }).then(data => {
+    console.log(opts);
+
+    res.json(opts).end();
+    return;
+
+    Snappy.snap(opts).then(data => {
         const image = Buffer.from(data, 'base64');
         res.writeHead(200, {
             'Content-Type': 'image/png',

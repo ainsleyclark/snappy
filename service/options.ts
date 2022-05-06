@@ -9,7 +9,7 @@ export interface Options {
     /**
      * TODO
      */
-    sizes: string[];
+    size: string;
 	/**
 	 * TODO
 	 */

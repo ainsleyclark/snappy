@@ -4,4 +4,3 @@ export class NullImageError extends Error {
         this.name = "NullImageError";
     }
 }
-
