@@ -19,7 +19,7 @@ env.config({
  * Config represents the environment variables set in the .env file
  * used a system configuration for the application.
  */
-class Config {
+export class Config {
 	appEnv: string;
 	appDebug: boolean;
 	appPort: number;

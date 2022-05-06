@@ -1,12 +1,20 @@
+
 import {Log} from "../../util/logger";
 import {Environment} from "../../util/env";
 
+
+
+jest.mock('../../util/env', () => jest.fn());
+
+Environment.isProduction = (): boolean => {
+	return true;
+};
+
 describe('Logger', () => {
 
-	it('Should be log level: debug in development', () => {
-		// @ts-ignore
+	console.log('hello', Environment);
 
-		// (Environment.prototype.isProduction as jest.Mock).mockReturnValue('Mocked bar');
+	it('Should be log level: debug in development', () => {
 		expect(Log.level).toBe('debug');
 	});
 
