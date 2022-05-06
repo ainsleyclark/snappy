@@ -42,7 +42,7 @@ export interface Options {
      * Tip: Go to the website you want a cookie for and [copy-paste it from DevTools](https://stackoverflow.com/a/24961735/64949).
      * @default []
      */
-    cookies?: ReadonlyArray<string | Record<string, string>>;
+   	// cookies?: ReadonlyArray<string | Record<string, string>>;
     /**
      * Capture a specific DOM element matching a CSS selector.
      */

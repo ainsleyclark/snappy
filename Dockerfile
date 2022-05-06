@@ -16,6 +16,7 @@ RUN npm install
 
 # Bundle app source
 COPY . .
+COPY .env.production .env
 
 EXPOSE 8080
 CMD [ "npm", "run", "start" ]

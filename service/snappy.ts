@@ -84,7 +84,7 @@ class Snapper {
             crop: opts.crop,
             css: opts.css,
             script: opts.script,
-            cookies: opts.cookies,
+            //cookies: opts.cookies,
             filename: Snapper.fileName(),
             select: opts.selector,
         };
@@ -116,6 +116,9 @@ class Snapper {
 			.dest(dir)
 			.run();
 
+		console.log('in')
+		console.log(screenshots);
+
 		const data = this.processScreenshot(screenshots, dir, cacheKey);
 		if (!data) {
 			throw new NullImageError('Base64 is null');
@@ -143,6 +146,8 @@ class Snapper {
         if (screenshots.length == 0) {
             throw new Error('Error: no screenshots in the response.');
         }
+
+		console.log(screenshots);
 
         // Retrieve the filepath, read the file from the system and
         // encode into a base 64 buffer.
@@ -203,6 +208,7 @@ class Snapper {
                 port: Environment.redisPort,
                 host: Environment.redisHost,
             },
+			legacyMode: true,
         });
 
         client.on('error', (err) => {
@@ -213,9 +219,9 @@ class Snapper {
             Log.debug('Successfully connected to Redis client');
         });
 
-        await client.connect().then(() => {
-            this.cache = client;
-        });
+        await client.connect();
+
+		this.cache = client;
     }
 
     /**

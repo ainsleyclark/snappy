@@ -48,7 +48,7 @@ export class Config {
 				APP_DEBUG: joi.bool().default(true),
 				APP_PORT: joi.number().default(3000),
 				REDIS_PORT: joi.number().positive().required(),
-				REDIS_HOST: joi.string().ip().required(),
+				REDIS_HOST: joi.string().required(),
 				REDIS_DB: joi.number().optional().allow('')
 			})
 			.unknown();
@@ -82,7 +82,7 @@ export class Config {
 		this.appDebug = envVars.APP_DEBUG;
 		this.appPort = envVars.APP_PORT;
 		this.redisPort = envVars.REDIS_PORT;
-		this.redisHost = envVars.REDIS_ADDRESS;
+		this.redisHost = envVars.REDIS_HOST;
 		this.redisUsername = envVars.REDIS_USERNAME;
 		this.redisPassword = envVars.REDIS_PASSWORD;
 		this.redisDB = envVars.REDIS_DB !== '' ? envVars.REDIS_DB : 0;
@@ -90,6 +90,8 @@ export class Config {
 }
 
 const Environment = new Config();
+
+console.log(Environment)
 
 export {
     Environment

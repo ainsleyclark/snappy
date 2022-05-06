@@ -14,6 +14,13 @@ import {getErrorMessage} from "../util/error";
  * @returns {Promise<void>}
  */
 export const snap = async (req: express.Request, res: express.Response) => {
+	// let hide = [];
+	// if (req.query.hide) {
+	// 	const test = req.query.hi
+	// 	hide = req.query.hide.split(',');
+	// }
+
+
     const opts = <Options>{
         url: req.query.url,
         size: req.query.size,
@@ -21,7 +28,7 @@ export const snap = async (req: express.Request, res: express.Response) => {
         delay: req.query.delay,
         crop: req.query.crop,
         script: req.query.script,
-        cookies: req.query.cookies,
+        //cookies: req.query.cookies,
         selector: req.query.selector,
         hide: req.query.hide,
         scale: req.query.scale,
@@ -31,10 +38,6 @@ export const snap = async (req: express.Request, res: express.Response) => {
         darkMode: req.query.darkMode,
     };
 
-    console.log(opts);
-
-    res.json(opts).end();
-    return;
 
     Snappy.snap(opts).then(data => {
         const image = Buffer.from(data, 'base64');
