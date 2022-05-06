@@ -1,5 +1,9 @@
 /**
- * TODO
+ * env.ts
+ * Environment is responsible for loading the .env file
+ * in the root directory and validating the keys.
+ * Throws an error if validation failed.
+ * @throws
  */
 const env = require('dotenv'),
     joi = require('joi');
@@ -42,7 +46,7 @@ const envVarsSchema = joi
     })
     .unknown();
 
-const { value: envVars, error } = envVarsSchema
+const {value: envVars, error} = envVarsSchema
     .prefs({ errors: { label: "key" } })
     .validate(process.env);
 
@@ -50,7 +54,7 @@ if (error) {
     throw new Error(`Environment config validation error: ${error.message}`);
 }
 
-module.exports = <Config>{
+const Environment = <Config>{
     appEnv: envVars.APP_ENV,
     appDebug: envVars.APP_DEBUG,
     appPort: envVars.APP_PORT,
@@ -59,4 +63,8 @@ module.exports = <Config>{
     redisUsername: envVars.REDIS_USERNAME,
     redisPassword: envVars.REDIS_PASSWORD,
     redisDB: envVars.REDIS_DB !== '' ? envVars.REDIS_DB : 0,
-};
+}
+
+export {
+    Environment
+}

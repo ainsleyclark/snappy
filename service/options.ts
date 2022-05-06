@@ -25,11 +25,6 @@ export interface Options {
      */
     delay?: number;
     /**
-     * Number of seconds after which the request is aborted.
-     * @default 60
-     */
-    timeout?: number;
-    /**
      * Crop to the set height.
      * @default false
      */

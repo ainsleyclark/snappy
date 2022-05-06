@@ -5,11 +5,14 @@ import * as path from 'path';
 import {createClient} from "redis";
 import {Options} from "./options";
 import {Screenshot} from "pageres";
+import {Log} from "../util/logger";
+import {Environment} from "../util/env";
+import {NullImageError} from "./errors";
+import {getErrorMessage} from "../util/error";
+
 
 const fs = require("fs"),
     os = require('os'),
-    logger = require('../util/logger'),
-    env = require('../util/env'),
     pageres = require('pageres'),
     mime = require('mime');
 
@@ -23,7 +26,7 @@ type RedisClientType = ReturnType<typeof createClient>;
  * before an image is expired from the cache.
  * @type {number}
  */
-const DEFAULT_EXPIRY = 30;
+const DEFAULT_EXPIRY = 60 * 60 * 24 * 4;
 
 /**
  * CACHE_KEY_PREFIX is the prefix for cached images that
@@ -31,6 +34,13 @@ const DEFAULT_EXPIRY = 30;
  * @type {string}
  */
 const CACHE_KEY_PREFIX = `snappy`;
+
+/**
+ * TIMEOUT is the number of seconds after which
+ * the request is aborted.
+ * @type {number}
+ */
+const TIMEOUT = 20;
 
 /**
  * Snappy is responsible for TODO.
@@ -65,21 +75,23 @@ export class Snappy {
      * @param {Options} opts
      */
     public async snap(opts: Options) {
-        logger.info(`Processing image for URL: ${opts.url}`);
+        Log.info(`Processing image for URL: ${opts.url} with options: ${JSON.stringify(opts)}`);
 
+        // TODO
+        const pageresOptions = {
+            delay: opts.delay,
+            timeout: TIMEOUT,
+            crop: opts.crop,
+            css: opts.css,
+            script: opts.script,
+            cookies: opts.cookies,
+            filename: this.fileName(),
+            select: opts.selector,
+        };
+
+        // TODO
         const dir = os.tmpdir(),
-            pOptions = {
-                delay: opts.delay,
-                timeout: opts.timeout,
-                crop: opts.crop,
-                css: opts.css,
-                script: opts.css,
-                cookies: opts.cookies,
-                filename: Buffer.from(Math.random().toString()).toString("base64").substr(10, 24),
-                select: opts.selector,
-            };
-
-        const cacheKey = Snappy.cacheKey(opts);
+            cacheKey = Snappy.cacheKey(opts);
 
         // If the options have 'ignore cache' set to false,
         // try and retrieve the image from the cache instance.
@@ -87,28 +99,41 @@ export class Snappy {
             try {
                 const b64 = await this.getImage(cacheKey);
                 if (b64 == null) {
-                    // TODO I think this should be an exception.
-                    throw new Error(`Image is null`);
+                    throw new NullImageError(`Base64 is null`);
                 }
-				logger.debug(`Serving image from cache: ${cacheKey}`);
+				Log.debug(`Serving image from cache: ${cacheKey}`);
                 return b64;
-            } catch (err) {
-                logger.debug(err);
+            } catch (err: unknown) {
+                if (!(err instanceof NullImageError)) {
+                    Log.debug(getErrorMessage(err));
+                }
             }
         }
 
         // Process the image screenshot download.
         try {
             const screenshots = await new pageres({delay: 1})
-                .src(opts.url, opts.sizes, pOptions)
+                .src(opts.url, opts.sizes, pageresOptions)
                 .dest(dir)
                 .run();
             const data = this.processScreenshot(screenshots, dir, cacheKey);
-			logger.debug(`Serving image from fs: ${cacheKey}`);
+            if (!data) {
+                throw new NullImageError('Base64 is null');
+            }
+            Log.debug(`Serving image from fs: ${cacheKey}`);
 			return data;
         } catch (err) {
-			// TODO, can we return from promise?
+			throw err;
         }
+    }
+
+    /**
+     *
+     * @returns {string}
+     * @private
+     */
+    private fileName(): string {
+        return Buffer.from(Math.random().toString()).toString("base64").substr(10, 24);
     }
 
     /**
@@ -153,7 +178,7 @@ export class Snappy {
      * @private
      */
     private storeImage(b64: string, key: string) {
-        logger.debug(`Storing image with key ${key}`);
+        Log.debug(`Storing image with key ${key}`);
         this.cache.set(key, b64, {
             EX: DEFAULT_EXPIRY,
         });
@@ -207,11 +232,11 @@ export class Snappy {
      */
     private async loadRedis() {
         const client = createClient({
-            username: env.redisUsername,
-            database: env.redisDB,
+            username: Environment.redisUsername,
+            database: Environment.redisDB,
             socket: {
-                port: env.redisPort,
-                host: env.redisHost,
+                port: Environment.redisPort,
+                host: Environment.redisHost,
             },
         });
 
@@ -220,7 +245,7 @@ export class Snappy {
         });
 
         client.on('connect', () => {
-            logger.info('Successfully connected to Redis client');
+            Log.info('Successfully connected to Redis client');
         });
 
         await client.connect().then(() => {
