@@ -5,6 +5,8 @@ WORKDIR /app
 
 # Install Chromium
 RUN apk add --no-cache  chromium --repository=http://dl-cdn.alpinelinux.org/alpine/v3.10/main
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+ENV CHROMIUM_PATH /usr/bin/chromium-browser
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
