@@ -73,7 +73,3 @@ Below are the options represented as query parameters you can pass to the `/snap
 | userAgent    | 1          |          | Custom user agent.                                                                                                                                                 |
 | transparent  | false      |          | Set background color to `transparent` instead of `white` if no background is set.                                                                                  |
 | darkMode     | false      |          | Emulate preference of dark color scheme.                                                                                                                           |
-
-
-## Ping
-
