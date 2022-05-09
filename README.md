@@ -28,15 +28,16 @@ process screenshots. Credits to [Pageres](https://github.com/sindresorhus/pagere
 
 ## Options
 
-Below are the options or query parameters you can pass to the `/snap` endpoint.
+Below are the options represented as query parameters you can pass to the `/snap` endpoint.
 
-| Query Key    | Example Value              | Default  | Required | Description                                                                                                                                                        |
-|--------------|:---------------------------|:---------|:---------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| url          | `https://google.com`       |          | ✅        | URL or local path of the website to screenshot.                                                                                                                    |
-| size         | `1920x1080` or `iphone 5s` | 1366x768 |          | Size of the screenshot to take, this can be represented in pixels i.e. 1920x1080 or a [device list](https://github.com/kevva/viewport-list/blob/master/data.json). |
-| ignoreCache  | `true`                     | false    |          | If the cache should be ignored when processing the screenshot. |
-| rebuildCache | `true`                     | false    |          | If the cache is to be rebuilt. |
-| delay        | `true`                     | false    |          | Delay capturing the screenshot. Useful when the site does things after load that you want to capture. |
+| Query Key    | Default  | Required | Description                                                                                                                                                        |
+|--------------|:---------|:---------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| url          |          | ✅        | URL or local path of the website to screenshot.                                                                                                                    |
+| size         | 1366x768 |          | Size of the screenshot to take, this can be represented in pixels i.e. 1920x1080 or a [device list](https://github.com/kevva/viewport-list/blob/master/data.json). |
+| ignoreCache  | false    |          | If the cache should be ignored when processing the screenshot.                                                                                                     |
+| rebuildCache | false    |          | If the cache is to be rebuilt.                                                                                                                                     |
+| delay        | false    |          | Delay capturing the screenshot. Useful when the site does things after load that you want to capture.                                                              |
+| crop         | false    |          | Delay capturing the screenshot. Useful when the site does things after load that you want to capture.                                                              |
 
 
 ## Ping
