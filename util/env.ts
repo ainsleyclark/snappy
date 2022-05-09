@@ -88,6 +88,8 @@ export class Config {
 		this.redisPassword = envVars.REDIS_PASSWORD;
 		this.redisDB = envVars.REDIS_DB !== '' ? envVars.REDIS_DB : 0;
 		this.redisTLS = envVars.REDIS_TLS === 'true';
+
+		console.log(this);
 	}
 }
 
