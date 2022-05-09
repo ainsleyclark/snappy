@@ -22,7 +22,7 @@ export const snap = async (req: express.Request, res: express.Response) => {
     } catch (err) {
         if (err instanceof ValidationError) {
             Log.error(err.message);
-            res.json(err.details).end();
+            res.json({error: true, message: err.message, data: err}).end();
         }
         return;
     }
@@ -35,6 +35,8 @@ export const snap = async (req: express.Request, res: express.Response) => {
         });
         res.end(image);
     }).catch(err => {
-        Log.error(getErrorMessage(err));
+        const msg = getErrorMessage(err);
+        Log.error(msg);
+        res.json({error: true, message: msg, data: err}).end();
     });
 };

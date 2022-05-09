@@ -77,15 +77,15 @@ class Snapper {
     public async snap(opts: Options) {
         Log.debug(`Processing image for URL: ${opts.url}`);
 
-        const pageresOptions = {
-            timeout: TIMEOUT,
-            filename: Snapper.fileName(),
-            ...opts,
-        };
-
-        // TODO
+        // Setup temporary directory, cache key and convert to
+        // Pageres Options for processing.
         const dir = os.tmpdir(),
-            cacheKey = Snapper.cacheKey(opts);
+            cacheKey = Snapper.cacheKey(opts),
+            pageresOptions = {
+                timeout: TIMEOUT,
+                filename: Snapper.fileName(),
+                ...opts,
+            };
 
         // If the options have 'ignore cache' set to false,
         // try and retrieve the image from the cache instance.
