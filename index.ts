@@ -1,6 +1,6 @@
 /**
  * index.ts
- * TODO
+ * Bootstrap Node Express server.
  */
 import * as express from 'express';
 import {Log, HTTPLog} from "./util/logger";
@@ -20,10 +20,13 @@ const app = express(),
  */
 const VERSION = '1.0';
 
+/**
+ * Middleware
+ */
 app.use(HTTPLog);
 
 /**
- *
+ * Bootstrap routes.
  */
 app.get('/snap', snap);
 app.get('/ping', ping);
@@ -43,7 +46,7 @@ welcome({
     color: `#000000`,
     bold: true,
     clear: true,
-    version: `1.0`
+    version: VERSION,
 });
 
 /**

@@ -1,31 +1,36 @@
 /**
- *
+ * options.ts
+ * Options is responsible for validating, processing
+ * the Snappy configuration.
  */
 import * as express from "express";
 
 const joi = require('joi');
 
 /**
- * TODO
+ * Options represents the configuration passed to the Snap
+ * service to obtain a screenshot.
  */
 export class Options {
     /**
-     * TODO
+     * URL or local path of the website to screenshot.
      */
     url: string;
 
     /**
-     * TODO
+     * The size of the screenshot to take, this can be represented
+     * in pixels i.e. 1920x1080 or a device list from below.
+     * @see https://github.com/kevva/viewport-list/blob/master/data.json
      */
     size: string;
 
 	/**
-	 * TODO
+	 * If the cache should be ignored when processing the screenshot.
 	 */
 	ignoreCache: boolean;
 
 	/**
-	 * TODO
+	 * If the cache is to be rebuilt.
 	 */
 	rebuildCache: boolean;
 
@@ -127,8 +132,6 @@ export class Options {
 
         return this;
     }
-
-
 
     /**
      * Validates the Options instance and throws an error

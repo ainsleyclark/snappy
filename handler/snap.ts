@@ -9,7 +9,7 @@ import {getErrorMessage} from "../util/error";
 import {ValidationError} from "joi";
 
 /**
- * TODO
+ * Snap handler endpoint.
  * @param {e.Request} req
  * @param {e.Response} res
  * @returns {Promise<void>}
