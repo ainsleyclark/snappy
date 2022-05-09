@@ -20,11 +20,20 @@ process screenshots.
 - 🎛️ Apply custom CSS & Javascript to the web page.
 - 📸 Many other settings including scale, user agent selection & dark mode.
 
-## Why?
+## Examples
 
+```
+/snap?url=https://google.com
+```
 
 
 ## Options
+
+| Query Key | Example Value              | Required | Description                                                                                            |
+|-----------|:---------------------------|:---------|:-------------------------------------------------------------------------------------------------------|
+| url       | `https://google.comz       | ✅        | URL or local path of the website to screenshot.                                                        |
+| size       | `1920x1080` or `ipgone 5s` | ✅        | Size of the screenshot to take, this can be represented in pixels i.e. 1920x1080 or a [device list](https://github.com/kevva/viewport-list/blob/master/data.json). |
+
 
 ## Ping
 
