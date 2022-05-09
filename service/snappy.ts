@@ -42,7 +42,8 @@ const CACHE_KEY_PREFIX = `snappy`;
 const TIMEOUT = 20;
 
 /**
- * Snapper is responsible for TODO.
+ * Snapper is responsible for capturing website screenshots
+ * through via Pageres or the Redis Driver.
  */
 class Snapper {
     /**
