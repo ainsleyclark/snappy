@@ -1,5 +1,7 @@
 /**
- * TODO
+ * snappy.ts
+ * Snappy is responsible for capture website screenshots
+ * and acts as the main server of the application.
  */
 import * as path from 'path';
 import {createClient} from "redis";
@@ -42,7 +44,7 @@ const CACHE_KEY_PREFIX = `snappy`;
 const TIMEOUT = 20;
 
 /**
- * Snapper is responsible for capturing website screenshots
+ * Snapper represents the entity for capturing website screenshots
  * through via Pageres or the Redis Driver.
  */
 class Snapper {
@@ -72,8 +74,10 @@ class Snapper {
     }
 
     /**
-     * TODO
+     * Snap retrieves a website screenshot from the options passed.
+     * If possible, the item will be served from the cache.
      * @param {Options} opts
+     * @throws NullImageError
      */
     public async snap(opts: Options) {
         Log.debug(`Processing image for URL: ${opts.url}`);
@@ -85,6 +89,10 @@ class Snapper {
             pageresOptions = {
                 timeout: TIMEOUT,
                 filename: Snapper.fileName(),
+                launchOptions: {
+                    executablePath: Environment.puppeteerExecPath || null,
+                    args: Environment.puppeteerArgs,
+                },
                 ...opts,
             };
 

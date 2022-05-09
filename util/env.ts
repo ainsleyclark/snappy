@@ -29,6 +29,8 @@ export class Config {
 	redisPassword: string;
 	redisDB: number;
 	redisTLS: boolean;
+	puppeteerExecPath: string;
+	puppeteerArgs: string[];
 
 	/**
 	 * Creates a new config instance.
@@ -88,8 +90,8 @@ export class Config {
 		this.redisPassword = envVars.REDIS_PASSWORD;
 		this.redisDB = envVars.REDIS_DB !== '' ? envVars.REDIS_DB : 0;
 		this.redisTLS = envVars.REDIS_TLS === 'true';
-
-		console.log(this);
+		this.puppeteerExecPath = envVars.PUPPETEER_EXEC_PATH;
+		this.puppeteerArgs = envVars.PUPPETEER_ARGS ? envVars.PUPPETEER_ARGS.split(',') : [];
 	}
 }
 
