@@ -97,7 +97,7 @@ export class Options {
      * @private
      */
     private readonly defaults: any = {
-        size: '1920x1080',
+        size: '1366x768',
         ignoreCache: false,
         rebuildCache: false,
         delay: 1,

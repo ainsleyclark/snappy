@@ -12,7 +12,17 @@ process screenshots.
 ![Made with Express](https://img.shields.io/badge/Made%20with-Express-brightgreen.svg?&style=flat)
 [![Twitter](https://img.shields.io/twitter/follow/ainsleydev)](https://twitter.com/ainsleydev)
 
+## Overview
+
+- 🖥️ Size
+- 🖼️ Crop
+- ✅ Send attachments with two struct fields, it's extremely simple.
+- ✅ Send CC & BCC messages.
+- ✅ Extremely lightweight.
+
 ## Why?
+
+
 
 ## Options
 
