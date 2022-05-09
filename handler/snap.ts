@@ -3,9 +3,10 @@
  */
 import * as express from "express";
 import {Log} from "../util/logger";
-import {Snappy} from "../service/snappy"
+import {Snappy} from "../service/snappy";
 import {Options} from "../service/options";
 import {getErrorMessage} from "../util/error";
+import {ValidationError} from "joi";
 
 /**
  * TODO
@@ -14,30 +15,17 @@ import {getErrorMessage} from "../util/error";
  * @returns {Promise<void>}
  */
 export const snap = async (req: express.Request, res: express.Response) => {
-	// let hide = [];
-	// if (req.query.hide) {
-	// 	const test = req.query.hi
-	// 	hide = req.query.hide.split(',');
-	// }
+    const opts = new Options().fromRequest(req);
 
-
-    const opts = <Options>{
-        url: req.query.url,
-        size: req.query.size,
-        ignoreCache: req.query.ignoreCache,
-        delay: req.query.delay,
-        crop: req.query.crop,
-        script: req.query.script,
-        //cookies: req.query.cookies,
-        selector: req.query.selector,
-        hide: req.query.hide,
-        scale: req.query.scale,
-        userAgent: req.query.userAgent,
-        headers: req.query.headers,
-        transparent: req.query.transparent,
-        darkMode: req.query.darkMode,
-    };
-
+    try {
+        opts.validate();
+    } catch (err) {
+        if (err instanceof ValidationError) {
+            Log.error(err.message);
+            res.json(err.details).end();
+        }
+        return;
+    }
 
     Snappy.snap(opts).then(data => {
         const image = Buffer.from(data, 'base64');
@@ -49,4 +37,4 @@ export const snap = async (req: express.Request, res: express.Response) => {
     }).catch(err => {
         Log.error(getErrorMessage(err));
     });
-}
+};

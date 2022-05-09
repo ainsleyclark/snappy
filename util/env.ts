@@ -41,7 +41,7 @@ export class Config {
 	 * @type {joi.ObjectSchema<any>}
 	 */
 	public validate() {
-		const envVarsSchema = joi
+		const schema = joi
 			.object()
 			.keys({
 				APP_ENV: joi.string().valid("production", "prod", "dev", "development", "test").required(),
@@ -53,7 +53,7 @@ export class Config {
 			})
 			.unknown();
 
-		const {value: envVars, error} = envVarsSchema
+		const {value: envVars, error} = schema
 			.prefs({ errors: { label: "key" } })
 			.validate(process.env);
 
@@ -90,8 +90,6 @@ export class Config {
 }
 
 const Environment = new Config();
-
-console.log(Environment)
 
 export {
     Environment

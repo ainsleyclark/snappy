@@ -13,7 +13,7 @@ import {getErrorMessage} from "../util/error";
 const fs = require("fs"),
     os = require('os'),
     pageres = require('pageres'),
-    mime = require('mime');
+    hash = require('object-hash');
 
 /**
  * Alias of a Redis Client.
@@ -62,7 +62,7 @@ class Snapper {
      * Creates a new Snappy instance.
      */
     constructor() {
-        Log.debug('Starting snappy...')
+        Log.debug('Starting snappy...');
         this.ready = new Promise((resolve, reject) => {
             this.loadRedis()
                 .then(() => resolve(undefined))
@@ -75,18 +75,12 @@ class Snapper {
      * @param {Options} opts
      */
     public async snap(opts: Options) {
-        Log.info(`Processing image for URL: ${opts.url} with options: ${JSON.stringify(opts)}`);
+        Log.debug(`Processing image for URL: ${opts.url}`);
 
-        // TODO
         const pageresOptions = {
-            delay: opts.delay,
             timeout: TIMEOUT,
-            crop: opts.crop,
-            css: opts.css,
-            script: opts.script,
-            //cookies: opts.cookies,
             filename: Snapper.fileName(),
-            select: opts.selector,
+            ...opts,
         };
 
         // TODO
@@ -116,9 +110,6 @@ class Snapper {
 			.dest(dir)
 			.run();
 
-		console.log('in')
-		console.log(screenshots);
-
 		const data = this.processScreenshot(screenshots, dir, cacheKey);
 		if (!data) {
 			throw new NullImageError('Base64 is null');
@@ -147,8 +138,6 @@ class Snapper {
             throw new Error('Error: no screenshots in the response.');
         }
 
-		console.log(screenshots);
-
         // Retrieve the filepath, read the file from the system and
         // encode into a base 64 buffer.
         const filePath = path.join(dir, screenshots[0].filename),
@@ -174,7 +163,7 @@ class Snapper {
     private storeImage(b64: string, key: string) {
         Log.debug(`Storing image with key ${key}`);
         this.cache.set(key, b64, {
-            EX: DEFAULT_EXPIRY,
+            EX: TIMEOUT,
         });
     }
 
@@ -208,10 +197,10 @@ class Snapper {
                 port: Environment.redisPort,
                 host: Environment.redisHost,
             },
-			legacyMode: true,
         });
 
         client.on('error', (err) => {
+            console.log(err);
             throw new Error(`Redis connect error: ${err}`);
         });
 
@@ -221,7 +210,7 @@ class Snapper {
 
         await client.connect();
 
-		this.cache = client;
+        this.cache = client;
     }
 
     /**
@@ -245,7 +234,7 @@ class Snapper {
             }
             serialised[key] = value;
         }
-        return `${CACHE_KEY_PREFIX}_${JSON.stringify(serialised)}`;
+        return `${CACHE_KEY_PREFIX}_${hash(serialised)}`;
     }
 
     /**
@@ -259,6 +248,7 @@ class Snapper {
 }
 
 const Snappy = new Snapper();
+
 export {
     Snappy
 };

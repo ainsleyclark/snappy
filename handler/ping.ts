@@ -10,5 +10,5 @@ import * as express from "express";
  * @returns {Promise<void>}
  */
 export const ping = async (req: express.Request, res: express.Response) => {
-    res.status(200).send('PONG').end()
-}
+    res.status(200).send('PONG').end();
+};
