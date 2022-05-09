@@ -192,10 +192,12 @@ class Snapper {
     private async loadRedis() {
         const client = createClient({
             username: Environment.redisUsername,
+            password: Environment.redisPassword,
             database: Environment.redisDB,
             socket: {
                 port: Environment.redisPort,
                 host: Environment.redisHost,
+                tls: Environment.redisTLS,
             },
         });
 
