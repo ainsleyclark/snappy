@@ -16,9 +16,9 @@ process screenshots.
 
 - 🖥️ Size
 - 🖼️ Crop
-- ✅ Send attachments with two struct fields, it's extremely simple.
-- ✅ Send CC & BCC messages.
-- ✅ Extremely lightweight.
+- 🙈 Hide 
+- 🎛️ CSS & JS
+- 📸 Crop
 
 ## Why?
 
