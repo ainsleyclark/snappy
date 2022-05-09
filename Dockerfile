@@ -3,8 +3,10 @@ FROM node:18-alpine3.14
 # Create app directory
 WORKDIR /app
 
-ENV CHROME_BIN="/usr/bin/chromium-browser" \
-    PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="true"
+# Set enviornment variables
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD="true"
+
+# Setup Chromium
 RUN set -x \
     && apk update \
     && apk upgrade \
@@ -13,9 +15,6 @@ RUN set -x \
     ttf-freefont \
     chromium \
     && npm install puppeteer@1.10.0
-
-# Install Chromium
-# RUN apk add --no-cache  chromium --repository=http://dl-cdn.alpinelinux.org/alpine/v3.10/main
 
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
