@@ -43,7 +43,7 @@ export class Options {
 
     /**
      * Crop to the set height.
-     * @default false
+     * @default true
      */
     crop: boolean;
 
@@ -101,7 +101,7 @@ export class Options {
         ignoreCache: false,
         rebuildCache: false,
         delay: 1,
-        crop: false,
+        crop: true,
         scale: 1,
         transparent: false,
         darkMode: false,
