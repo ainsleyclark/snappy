@@ -35,6 +35,12 @@ Snap a URL with the height set (crop) and serve the images fresh (no cache).
 /snap?url=https://google.com&size=1920x1080&ignoreCache=true
 ```
 
+Snap a URL and hide specific DOM elements (with a comma delimited list).
+
+```
+/snap?url=https://google.com&hide=h1,img
+```
+
 ## Options
 
 Below are the options represented as query parameters you can pass to the `/snap` endpoint.
