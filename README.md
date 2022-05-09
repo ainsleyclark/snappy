@@ -22,8 +22,17 @@ process screenshots. Credits to [Pageres](https://github.com/sindresorhus/pagere
 
 ## Examples
 
+Snap a URL with a size of `1920x1080`
+
 ```
-/snap?url=https://google.com
+/snap?url=https://google.com&size=1920x1080
+```
+
+
+Snap a URL with the height set (crop) and serve the images fresh (no cache). 
+
+```
+/snap?url=https://google.com&size=1920x1080&ignoreCache=true
 ```
 
 ## Options
@@ -37,7 +46,7 @@ Below are the options represented as query parameters you can pass to the `/snap
 | ignoreCache  | `false`    |          | If the cache should be ignored when processing the screenshot.                                                                                                     |
 | rebuildCache | `false`    |          | If the cache is to be rebuilt.                                                                                                                                     |
 | delay        | `false`    |          | Delay capturing the screenshot. Useful when the site does things after load that you want to capture.                                                              |
-| crop         | `true`     |          | Delay capturing the screenshot. Useful when the site does things after load that you want to capture.                                                              |
+| crop         | `true`     |          | Crop to the set height.                                                                                                                                            |
 | css          |            |          | Apply custom CSS to the webpage.                                                                                                                                   |
 | script       |            |          | Apply custom JavaScript to the webpage.                                                                                                                            |
 | selector     |            |          | Capture a specific DOM element matching a CSS selector.                                                                                                            |
