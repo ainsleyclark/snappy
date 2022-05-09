@@ -1,5 +1,5 @@
 <p align="left">
-    <img alt="logo" src="./res/logo.svg" width="40%">
+    <img alt="logo" src="./res/logo.svg" width="30%">
 </p>
 
 # snappy
