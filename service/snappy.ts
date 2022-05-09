@@ -163,7 +163,7 @@ class Snapper {
     private storeImage(b64: string, key: string) {
         Log.debug(`Storing image with key ${key}`);
         this.cache.set(key, b64, {
-            EX: TIMEOUT,
+            EX: DEFAULT_EXPIRY,
         });
     }
 

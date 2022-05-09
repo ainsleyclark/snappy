@@ -128,6 +128,8 @@ export class Options {
         return this;
     }
 
+
+
     /**
      * Validates the Options instance and throws an error
      * if validation failed.
