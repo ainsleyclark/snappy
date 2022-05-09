@@ -14,11 +14,11 @@ process screenshots.
 
 ## Overview
 
-- 🖥️ Size
-- 🖼️ Crop
-- 🙈 Hide 
-- 🎛️ CSS & JS
-- 📸 Crop
+- 🖥️ Control the size of the screenshot to take by pixels or device.
+- 🖼️ Crop the screenshot to a set height from the top of the viewport.
+- 🙈 Hide a collection of DOM elements matching CSS selectors.
+- 🎛️ Apply custom CSS & Javascript to the web page.
+- 📸 Many other settings including scale, user agent selection & dark mode.
 
 ## Why?
 
