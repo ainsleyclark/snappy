@@ -38,8 +38,21 @@ Snap a URL with the height set (crop) and serve the images fresh (no cache).
 Snap a URL and hide specific DOM elements (with a comma delimited list).
 
 ```
-/snap?url=https://google.com&hide=h1,img
+/snap?url=https://google.com?hide=h1,img
 ```
+
+Snap a URL with a specific user agent.
+
+```
+/snap?url=https://google.com?userAgent=AdsBot-Google
+```
+
+Snap a URL and emulate preference of a dark color scheme.
+
+```
+/snap?url=https://google.com?darkMode: true
+```
+
 
 ## Options
 
